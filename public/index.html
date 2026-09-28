@@ -10,13 +10,15 @@
   <aside class="sidebar">
     <div class="brand"><span class="brand-piece">♟</span><span>GreenChess</span></div>
     <nav class="nav" aria-label="Primary">
-      <button class="nav-item active" type="button">♞ <span>Play</span></button>
-      <button class="nav-item" type="button">♟ <span>Puzzles</span></button>
-      <button class="nav-item" type="button">▰ <span>Learn</span></button>
-      <button class="nav-item" type="button">⚙ <span>Train</span></button>
-      <button class="nav-item" type="button">◉ <span>Watch</span></button>
-      <button class="nav-item" type="button">◎ <span>Community</span></button>
+      <button class="nav-item active" data-section="play" type="button">♞ <span>Play</span></button>
+      <button class="nav-item" data-section="puzzles" type="button">♟ <span>Puzzles</span></button>
+      <button class="nav-item" data-section="learn" type="button">▰ <span>Learn</span></button>
+      <button class="nav-item" data-section="train" type="button">⚙ <span>Train</span></button>
+      <button class="nav-item" data-section="watch" type="button">◉ <span>Watch</span></button>
+      <button class="nav-item" data-section="community" type="button">◎ <span>Community</span></button>
+      <button class="nav-item" data-section="other" type="button">••• <span>Other</span></button>
     </nav>
+    <div id="navFlyout" class="nav-flyout hidden" aria-hidden="true"></div>
     <div class="sidebar-bottom">
       <button id="sidebarSignup" class="primary wide" type="button">Sign Up</button>
       <button id="sidebarLogin" class="secondary wide" type="button">Log In</button>
@@ -90,6 +92,24 @@
         <h2>Puzzle of the Day</h2>
         <div id="dailyBoard" class="daily-board"></div>
       </div>
+    </section>
+  </main>
+
+  <main id="sectionScreen" class="page section-page hidden">
+    <section class="section-layout">
+      <div class="section-board-wrap">
+        <div class="player-label"><span class="avatar small">♟</span><strong>Opponent</strong></div>
+        <div id="sectionBoard" class="board section-board"></div>
+        <div class="player-label"><span class="avatar small">♙</span><strong>Player</strong></div>
+      </div>
+
+      <section class="section-panel">
+        <header class="section-panel-header">
+          <span id="sectionIcon" class="section-icon">♞</span>
+          <h1 id="sectionTitle">Play Chess</h1>
+        </header>
+        <div id="sectionCards" class="section-cards"></div>
+      </section>
     </section>
   </main>
 

@@ -29,12 +29,122 @@ const MINI_BOARD = [
   ["", "", "", "", "", "", "R", "K"],
   ["", "", "", "", "", "", "", ""],
 ];
+const PUZZLE_BOARD = [
+  ["", "", "", "", "", "", "", "k"],
+  ["", "", "", "", "", "", "p", "p"],
+  ["", "", "", "", "", "", "", ""],
+  ["", "", "", "", "", "", "", ""],
+  ["", "", "", "", "", "", "", ""],
+  ["", "", "", "", "", "", "", ""],
+  ["", "", "", "", "", "", "", ""],
+  ["", "", "", "", "", "R", "", "K"],
+];
+const SECTION_DATA = {
+  play: {
+    icon: "♞",
+    title: "Play Chess",
+    board: START_BOARD,
+    menu: ["Practice Board", "Play Bots", "Play Coach", "Stats", "Tournaments", "Variants", "Game History"],
+    cards: [
+      ["⚡", "Practice Board", "Start a local chess game without matchmaking.", "Practice", "Start"],
+      ["🤖", "Play Bots", "Challenge a built-in GreenChess bot.", "Play vs. Bot", "Play"],
+      ["🧔", "Play Coach", "Learn as you play with gentle move hints.", "Practice", "Train"],
+      ["🏅", "Tournaments", "Practice tournament-style focus locally.", "Practice", "Open"],
+      ["🎲", "Chess Variants", "Try a familiar board with a fresh goal.", "Practice", "Explore"],
+      ["📜", "Game History", "Review completed local practice games.", "home", "View"],
+    ],
+  },
+  puzzles: {
+    icon: "♟",
+    title: "Puzzles",
+    board: PUZZLE_BOARD,
+    menu: ["Puzzles", "Daily Puzzle", "Puzzle Rush", "Puzzle Battle", "Custom Puzzles"],
+    cards: [
+      ["♟", "Daily Puzzle", "Solve a clean tactical position.", "Puzzle Practice", "Solve"],
+      ["🚀", "Puzzle Rush", "Practice quick pattern recognition.", "Puzzle Practice", "Start"],
+      ["⚔", "Puzzle Battle", "A solo tactics sprint inspired by battle mode.", "Puzzle Practice", "Practice"],
+      ["📖", "Custom Puzzles", "Use a hand-picked board setup.", "Puzzle Practice", "Open"],
+    ],
+  },
+  learn: {
+    icon: "▰",
+    title: "Learn",
+    board: START_BOARD,
+    menu: ["Lessons", "Play Coach", "Openings"],
+    cards: [
+      ["▰", "Lessons", "Learn piece movement, checks, and simple plans.", "Practice", "Next Lesson"],
+      ["🧔", "Play Coach", "Practice with hints instead of pressure.", "Practice", "Start"],
+      ["📚", "Openings", "Explore center control from the first moves.", "Practice", "Study"],
+    ],
+  },
+  train: {
+    icon: "⚙",
+    title: "Train",
+    board: START_BOARD,
+    menu: ["Courses", "Analysis", "Insights", "Classroom", "Endgames", "Practice", "Aimchess"],
+    cards: [
+      ["📖", "Courses", "Follow compact chess training paths.", "Practice", "Open"],
+      ["🔍", "Analysis", "Review positions and find candidate moves.", "Practice", "Analyze"],
+      ["💡", "Insights", "Spot simple patterns from your practice.", "home", "View"],
+      ["🏫", "Classroom", "A quiet board for structured study.", "Practice", "Enter"],
+      ["♚", "Endgames", "Practice king and rook fundamentals.", "Practice", "Train"],
+      ["🎯", "Practice", "Jump straight into local improvement.", "Practice", "Start"],
+    ],
+  },
+  watch: {
+    icon: "◉",
+    title: "Watch",
+    board: LANDING_BOARD,
+    menu: ["Streamers", "Events", "Videos", "Top Games"],
+    cards: [
+      ["🎥", "Videos", "Replay instructive sample ideas.", "home", "Browse"],
+      ["🏆", "Top Games", "Study model positions on the board.", "Practice", "View"],
+      ["📡", "Events", "A static hub for chess inspiration.", "home", "Open"],
+    ],
+  },
+  community: {
+    icon: "◎",
+    title: "Community",
+    board: START_BOARD,
+    menu: ["Friends", "Clubs", "Members", "Coaches", "Top Players", "Chess Ratings", "Leaderboards", "Chess Today", "News", "Articles", "Blogs", "Forums"],
+    cards: [
+      ["👥", "Friends", "Local profile space without online accounts.", "home", "Open"],
+      ["🏰", "Clubs", "Group your chess study themes.", "home", "Open"],
+      ["🌍", "Members", "Explore chess roles and player types.", "home", "Explore"],
+      ["🧑", "Coaches", "Find training prompts for self-study.", "Practice", "Practice"],
+      ["👑", "Top Players", "A showcase area for famous games.", "Practice", "Study"],
+      ["🏅", "Leaderboards", "Track your own local progress.", "home", "View"],
+    ],
+  },
+  other: {
+    icon: "•••",
+    title: "Other",
+    board: START_BOARD,
+    menu: ["Collections", "Games Database", "Chess Terms", "Rules", "Explorer", "Vote Chess", "Solo Chess", "Computer Championship", "ChessKid", "Tools", "Vision", "Shop / Merch", "Gift", "Calculator"],
+    cards: [
+      ["▣", "Collections", "Save themes and study ideas.", "home", "Open"],
+      ["▦", "Games Database", "Browse sample chess positions.", "Practice", "Browse"],
+      ["A-Z", "Chess Terms", "Learn chess vocabulary.", "home", "Read"],
+      ["✅", "Rules", "Review legal move basics.", "Practice", "Learn"],
+      ["🧭", "Explorer", "Explore openings on a clean board.", "Practice", "Explore"],
+      ["♙", "Solo Chess", "Practice piece coordination alone.", "Puzzle Practice", "Play"],
+      ["🏆", "Computer Championship", "Play against the local bot.", "Play vs. Bot", "Start"],
+      ["🧮", "Calculator", "Keep score and practice notation.", "home", "Open"],
+    ],
+  },
+};
 
 const $ = (id) => document.getElementById(id);
 const landingScreen = $("landingScreen");
 const homeScreen = $("homeScreen");
+const sectionScreen = $("sectionScreen");
 const gameScreen = $("gameScreen");
 const gameBoard = $("gameBoard");
+const sectionBoard = $("sectionBoard");
+const sectionIcon = $("sectionIcon");
+const sectionTitle = $("sectionTitle");
+const sectionCards = $("sectionCards");
+const navFlyout = $("navFlyout");
 const statusLine = $("statusLine");
 const moveLog = $("moveLog");
 const promoOverlay = $("promoOverlay");
@@ -60,7 +170,7 @@ function inBounds(r, c) { return r >= 0 && r < 8 && c >= 0 && c < 8; }
 function cloneBoard(value) { return value.map((row) => row.slice()); }
 
 function show(screen) {
-  [landingScreen, homeScreen, gameScreen].forEach((el) => el.classList.add("hidden"));
+  document.querySelectorAll(".page").forEach((el) => el.classList.add("hidden"));
   screen.classList.remove("hidden");
 }
 
@@ -79,11 +189,18 @@ $("botCardBtn").addEventListener("click", () => startGame("Play vs. Bot"));
 $("historyPlayBtn").addEventListener("click", () => startGame("Practice"));
 $("startPuzzleBtn").addEventListener("click", () => startGame("Puzzle Practice"));
 $("puzzleCardBtn").addEventListener("click", () => startGame("Puzzle Practice"));
+$("openLessonsBtn").addEventListener("click", () => openSection("learn"));
 $("backHomeBtn").addEventListener("click", () => show(homeScreen));
 $("newGameBtn").addEventListener("click", () => startGame($("gameTitle").textContent));
 $("flipBoardBtn").addEventListener("click", () => { flipped = !flipped; renderGame(); });
 $("copyFenBtn").addEventListener("click", copyFen);
 $("exportPgnBtn").addEventListener("click", exportPgn);
+
+document.querySelectorAll(".nav-item").forEach((button) => {
+  button.addEventListener("click", () => openSection(button.dataset.section));
+  button.addEventListener("mouseenter", () => showFlyout(button));
+});
+document.querySelector(".sidebar").addEventListener("mouseleave", hideFlyout);
 
 function startGame(title) {
   board = cloneBoard(START_BOARD);
@@ -100,6 +217,56 @@ function startGame(title) {
   moveLog.textContent = "No moves yet.";
   show(gameScreen);
   renderGame();
+}
+
+function openSection(key) {
+  const data = SECTION_DATA[key] || SECTION_DATA.play;
+  document.querySelectorAll(".nav-item").forEach((button) => {
+    button.classList.toggle("active", button.dataset.section === key);
+  });
+  sectionIcon.textContent = data.icon;
+  sectionTitle.textContent = data.title;
+  renderBoard(sectionBoard, data.board || START_BOARD);
+  sectionCards.innerHTML = data.cards.map(([icon, title, description, action, label]) => `
+    <article class="section-card">
+      <div class="section-card-art">${icon}</div>
+      <div>
+        <h2>${title}</h2>
+        <p>${description}</p>
+        <button class="secondary section-action" data-action="${action}" type="button">${label}</button>
+      </div>
+    </article>
+  `).join("");
+  sectionCards.querySelectorAll(".section-action").forEach((button) => {
+    button.addEventListener("click", () => handleSectionAction(button.dataset.action));
+  });
+  show(sectionScreen);
+}
+
+function handleSectionAction(action) {
+  if (action === "home") return show(homeScreen);
+  startGame(action || "Practice");
+}
+
+function showFlyout(button) {
+  const data = SECTION_DATA[button.dataset.section];
+  if (!data) return;
+  navFlyout.innerHTML = data.menu.map((label, index) => `
+    <button class="flyout-item" type="button" data-index="${index}">
+      <span>${index === 0 ? data.icon : "•"}</span>
+      <strong>${label}</strong>
+    </button>
+  `).join("");
+  navFlyout.classList.remove("hidden");
+  navFlyout.setAttribute("aria-hidden", "false");
+  navFlyout.querySelectorAll(".flyout-item").forEach((item) => {
+    item.addEventListener("click", () => openSection(button.dataset.section));
+  });
+}
+
+function hideFlyout() {
+  navFlyout.classList.add("hidden");
+  navFlyout.setAttribute("aria-hidden", "true");
 }
 
 function renderBoard(target, position, options = {}) {
