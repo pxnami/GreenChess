@@ -1,7 +1,7 @@
 {
   "name": "greenchess",
   "version": "1.0.0",
-  "description": "A static chess practice site for GitHub Pages",
+  "description": "A lightweight browser-based chess practice experience with local play, training views, and PGN export.",
   "main": "scripts/serve-static.js",
   "scripts": {
     "start": "node scripts/serve-static.js",

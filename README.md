@@ -1,61 +1,123 @@
-# GreenChess
+<div align="center">
 
-GreenChess is a static chess practice site inspired by the dark, green-accented chess platform layout in Chess.com. It is designed for GitHub Pages and does not include online multiplayer, matchmaking, sockets, accounts, or a backend.
+  # ♟ GreenChess
+
+  **A lightweight chess practice experience that runs entirely in the browser.**
+
+  [![Play GreenChess](https://img.shields.io/badge/Play_GreenChess-81B64C?style=for-the-badge&labelColor=262522)](https://pxnami.github.io/GreenChess/)
+  [![View source](https://img.shields.io/badge/View_source-312E2B?style=for-the-badge)](https://github.com/pxnami/GreenChess)
+  [![Report issue](https://img.shields.io/badge/Report_issue-EDEDD1?style=for-the-badge&labelColor=262522)](https://github.com/pxnami/GreenChess/issues)
+
+  <sub>Static, responsive, and deployable without a backend.</sub>
+</div>
+
+<br>
+
+![GreenChess practice dashboard](docs/screenshots/dashboard.png)
+
+## About
+
+GreenChess is a static chess practice site built with plain HTML, CSS, and JavaScript. It combines a local chessboard, a simple browser-based opponent, practice controls, and dashboard-style training areas in a responsive interface.
+
+Everything runs locally in the browser. There are no accounts, servers, matchmaking queues, sockets, or online multiplayer services.
 
 ## Features
 
-- Logged-out landing screen with a large chessboard and primary call to action
-- Logged-in-style practice dashboard stored locally in the browser
-- Play vs. a simple local bot
-- Puzzle and lesson-style dashboard cards
-- Drag-and-drop and click-to-move board controls
-- Legal move indicators, last-move highlights, check highlighting, promotion, castling, and en passant
-- Board flipping, FEN copy, and PGN export
-- Responsive layout for desktop and mobile
+| Play | Practice | Control |
+| --- | --- | --- |
+| Click-to-move and drag-and-drop input | Local opponent that selects legal moves | Flip the board |
+| Legal move indicators | Puzzle and lesson-style sections | Copy the current FEN |
+| Check and last-move highlighting | Configurable practice clock | Export a PGN file |
+| Castling, en passant, and promotion | Locally stored profile state | Desktop and mobile layouts |
 
-## Development
+## Interface
 
-```bash
+<table>
+  <tr>
+    <td width="72%"><img src="docs/screenshots/game-board.png" alt="GreenChess practice game"></td>
+    <td width="28%"><img src="docs/screenshots/mobile-dashboard.png" alt="GreenChess mobile dashboard"></td>
+  </tr>
+  <tr>
+    <td align="center"><sub>Practice board, move history, clock, and game controls.</sub></td>
+    <td align="center"><sub>Compact navigation and training cards on mobile.</sub></td>
+  </tr>
+</table>
+
+## How it works
+
+```mermaid
+flowchart LR
+    A[Browser interface] --> B[Local chess rules]
+    B --> C[Legal move validation]
+    C --> D[Board rendering]
+    C --> E[Simple local opponent]
+    D --> F[FEN copy and PGN export]
+    A --> G[Local profile state]
+```
+
+The chess logic lives in `public/script.js`. It validates piece movement, prevents moves that leave the king in check, handles special moves, records notation, and detects game-ending positions. The built-in opponent chooses from its available legal moves and prioritizes captures when possible.
+
+The application deliberately avoids runtime dependencies and external services. Chess pieces are rendered from the included Cburnett asset set.
+
+## Technology
+
+| Area | Implementation |
+| --- | --- |
+| Interface | Semantic HTML and responsive CSS |
+| Game logic | Vanilla JavaScript |
+| State | Browser memory and `localStorage` |
+| Development server | Small Node.js static server |
+| Verification | Node.js syntax checks |
+| Deployment | GitHub Actions and GitHub Pages |
+
+## Run locally
+
+Node.js 20 or newer is recommended.
+
+```sh
+git clone https://github.com/pxnami/GreenChess.git
+cd GreenChess
 npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Open [http://localhost:3000](http://localhost:3000).
 
-## Build
+### Commands
 
-```bash
-npm run check
-npm run build
+```sh
+npm run dev      # Start the local static server
+npm run check    # Validate JavaScript syntax
+npm run build    # Copy the production site to dist/
 ```
 
-The GitHub Pages build is copied to `dist/`.
+## Project structure
+
+```text
+.github/workflows/    GitHub Pages deployment
+docs/screenshots/     README previews
+public/               Application source and chess assets
+scripts/              Development server and static build
+dist/                 Generated production output
+```
 
 ## Deployment
 
-This project is intended to live in its own repository and deploy from the `dist/` folder or from the static files in `public/`.
+The [GitHub Pages workflow](.github/workflows/pages.yml) checks the JavaScript, builds the static site, and deploys `dist/` whenever `main` is updated. The application has no environment variables or server-side services.
 
-## Piece Attribution
+Live site: [pxnami.github.io/GreenChess](https://pxnami.github.io/GreenChess/)
 
-Chess piece images are from the Cburnett chess set on Wikimedia Commons by en:User:Cburnett, licensed under CC BY-SA 3.0:
+## Limitations
 
-- `Chess_bdt60.png`
-- `Chess_blt60.png`
-- `Chess_kdt60.png`
-- `Chess_klt60.png`
-- `Chess_ndt60.png`
-- `Chess_nlt60.png`
-- `Chess_pdt60.png`
-- `Chess_plt60.png`
-- `Chess_qdt60.png`
-- `Chess_qlt60.png`
-- `Chess_rdt60.png`
-- `Chess_rlt60.png`
+- The built-in opponent is intentionally simple and is not a competitive chess engine.
+- Puzzle, lesson, community, and watch areas are interface demonstrations rather than connected online services.
+- Profile information is stored only in the current browser.
+- GreenChess does not provide online accounts, cloud synchronization, matchmaking, or multiplayer.
 
-License: https://creativecommons.org/licenses/by-sa/3.0/
+## Attribution
 
-Source files are available through Wikimedia Commons.
+Chess piece images use the [Cburnett chess set](https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces) by Cburnett and are licensed under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/). The asset license remains separate from the GreenChess source-code license.
 
 ## License
 
-MIT for the GreenChess code. Chess piece images remain under CC BY-SA 3.0.
+GreenChess source code is available under the [MIT License](LICENSE).
