@@ -1,0 +1,13 @@
+{
+  "name": "greenchess",
+  "version": "1.0.0",
+  "description": "A static chess practice site for GitHub Pages",
+  "main": "scripts/serve-static.js",
+  "scripts": {
+    "start": "node scripts/serve-static.js",
+    "dev": "node scripts/serve-static.js",
+    "build": "node scripts/build-static.js",
+    "check": "node --check public/script.js && node --check public/pieces-render.js && node --check scripts/build-static.js && node --check scripts/serve-static.js"
+  },
+  "dependencies": {}
+}

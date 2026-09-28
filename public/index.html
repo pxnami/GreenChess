@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GreenChess</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-piece">♟</span><span>GreenChess</span></div>
+    <nav class="nav" aria-label="Primary">
+      <button class="nav-item active" type="button">♞ <span>Play</span></button>
+      <button class="nav-item" type="button">♟ <span>Puzzles</span></button>
+      <button class="nav-item" type="button">▰ <span>Learn</span></button>
+      <button class="nav-item" type="button">⚙ <span>Train</span></button>
+      <button class="nav-item" type="button">◉ <span>Watch</span></button>
+      <button class="nav-item" type="button">◎ <span>Community</span></button>
+    </nav>
+    <div class="sidebar-bottom">
+      <button id="sidebarSignup" class="primary wide" type="button">Sign Up</button>
+      <button id="sidebarLogin" class="secondary wide" type="button">Log In</button>
+      <button class="plain-row" type="button">? <span>Help & Support</span></button>
+      <button class="plain-row" type="button">文 <span>English</span></button>
+    </div>
+  </aside>
+
+  <main id="landingScreen" class="page landing">
+    <section class="hero-board" aria-label="Decorative chessboard">
+      <div id="landingBoard" class="board preview-board"></div>
+    </section>
+    <section class="hero-copy">
+      <h1>Play Chess on GreenChess</h1>
+      <p>Practice tactics, play against friendly bots, and improve without online matchmaking.</p>
+      <button id="getStartedBtn" class="primary hero-button" type="button">Get Started</button>
+    </section>
+  </main>
+
+  <main id="homeScreen" class="page home hidden">
+    <header class="home-header">
+      <div class="user-chip"><span class="avatar">♙</span><strong id="profileName">greenplayer</strong></div>
+      <div class="streak"><span>♨</span><strong>0 Day Streak</strong></div>
+    </header>
+
+    <section class="dashboard">
+      <div class="play-panel">
+        <h2>Practice chess</h2>
+        <div class="time-pills">
+          <button class="pill active" type="button">10 Minutes</button>
+          <button class="pill" type="button">5 Minutes</button>
+          <button class="pill" type="button">No Clock</button>
+        </div>
+        <button id="startPracticeBtn" class="primary wide big" type="button">Start Practice</button>
+        <button id="startBotBtn" class="panel-action" type="button">♟ Play vs. Bots</button>
+        <button id="startPuzzleBtn" class="panel-action" type="button">♞ Daily Puzzle</button>
+        <button id="openLessonsBtn" class="panel-action" type="button">▰ Lessons</button>
+      </div>
+
+      <article class="feature-card">
+        <div id="miniPuzzleBoard" class="mini-board"></div>
+        <h3>Solve to improve</h3>
+        <button id="puzzleCardBtn" class="secondary wide" type="button">Solve Puzzle</button>
+      </article>
+
+      <article class="feature-card">
+        <div id="lessonBoard" class="mini-board"></div>
+        <h3>Control the center</h3>
+        <button class="secondary wide" type="button">Next Lesson</button>
+      </article>
+
+      <article class="feature-card">
+        <div id="botBoard" class="mini-board amber-board"></div>
+        <h3>Cliff - Beginner Bot</h3>
+        <button id="botCardBtn" class="secondary wide" type="button">Play vs. Bots</button>
+      </article>
+    </section>
+
+    <section class="home-lower">
+      <div class="history-panel">
+        <h2>Game History</h2>
+        <div class="empty-history">
+          <span>▦</span>
+          <strong>No game history</strong>
+          <p>Completed practice games will appear here.</p>
+          <button id="historyPlayBtn" class="primary" type="button">Play Chess</button>
+        </div>
+      </div>
+
+      <div class="daily-panel">
+        <h2>Puzzle of the Day</h2>
+        <div id="dailyBoard" class="daily-board"></div>
+      </div>
+    </section>
+  </main>
+
+  <main id="gameScreen" class="page game hidden">
+    <section class="game-layout">
+      <div class="board-column">
+        <div class="player-row"><span id="blackName">GreenBot</span><strong id="blackClock">10:00</strong></div>
+        <div id="gameBoard" class="board game-board"></div>
+        <div class="player-row"><span id="whiteName">You</span><strong id="whiteClock">10:00</strong></div>
+      </div>
+
+      <aside class="game-panel">
+        <h2 id="gameTitle">Play vs. Bot</h2>
+        <p id="statusLine">White to move</p>
+        <div class="control-grid">
+          <button id="newGameBtn" class="primary" type="button">New Game</button>
+          <button id="flipBoardBtn" class="secondary" type="button">Flip Board</button>
+          <button id="copyFenBtn" class="secondary" type="button">Copy FEN</button>
+          <button id="exportPgnBtn" class="secondary" type="button">Export PGN</button>
+        </div>
+        <h3>Moves</h3>
+        <div id="moveLog" class="move-log">No moves yet.</div>
+        <button id="backHomeBtn" class="secondary wide" type="button">Back Home</button>
+      </aside>
+    </section>
+  </main>
+
+  <div id="promoOverlay" class="overlay hidden">
+    <div class="modal">
+      <h3>Choose promotion</h3>
+      <div id="promoOptions" class="promo-options"></div>
+    </div>
+  </div>
+
+  <script src="pieces-render.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
